@@ -2,7 +2,7 @@
 const container = d3.select("#container").style("position","relative");
 const width = Number(container.style("width").replace("px",""));
 const height = Number(container.style("height").replace("px",""));
-const margin = { top: 15, right: 10, bottom: 70, left:60};
+const margin = { top: 15, right: 10, bottom: 70, left:65};
 const chartWidth = width - margin.left - margin.right;
 const chartHeight = height - margin.top - margin.bottom;
     
@@ -23,6 +23,14 @@ const svg = container.append("svg")
 const yAxisArea = svg.append("g").attr("transform","translate("+(margin.left-10)+","+margin.top+")");
 const xAxisArea = svg.append("g").attr("transform","translate("+margin.left+","+(chartHeight+2+margin.top)+")");
 const label = svg.append("text").attr("x", margin.left+10).attr("y", margin.top);
+
+svg.append("text") // y-axis label
+    // .attr("transform", "rotate(-90)")
+    .attr('x',0)
+    .attr('y', margin.top)
+    .text("Income/$")
+    .style('font', '12px Verdana')
+    .style("font-weight","bold");
 
 
 const interactiveArea = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
@@ -51,6 +59,8 @@ const drawPlot = async () => {
     let yAxis = d3.axisLeft(yScale); 
     yAxisArea.append("g").attr("class", "y axis").call(yAxis);
 
+   
+
     let xAxis = d3.axisBottom(xScale); 
     xAxisArea.append("g")  
              .attr("class", "x axis")
@@ -69,7 +79,7 @@ const drawPlot = async () => {
            .attr("cy", yScale(d.Median))
            .style("fill", colorScale(d.Unemployment_rate))
            .attr("r",8)
-           .style("opacity",0.6)
+           .style("opacity",0.9)
     });
 
       const delaunay = d3.Delaunay.from(data, d => xScale(d.Major_category), d => yScale(d.Median));
