@@ -1,12 +1,33 @@
 <html>
-<head>
-    <link rel="stylesheet" href="css/style.css"/>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://d3js.org/topojson.v3.min.js"></script>
-</head>
-<body>
-    <div id="container" style="width: 650px; height: 400px; text-align: center; margin: auto"></div>
-    <div id="raster-legend" style="margin: auto"></div>
-    <script type="text/javascript" src="raster.js"></script>
-</body>
+    <style>
+        .outline {
+            stroke: black;
+            stroke-width: 1px;
+            fill: none;
+        }
+
+        .graticule {
+            fill: none;
+            stroke: grey;
+            stroke-width: 1px;
+        }
+    </style>
+
+    <head>
+        <link rel="stylesheet" href="css/style.css" />
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://d3js.org/topojson.v3.min.js"></script>
+    </head>
+
+    <body>
+        <!-- MAP -->
+        <svg id="choropleth" width="1200" height="600" style="background: #445; margin-top: 30px"></svg>
+        <svg id="mapLegend" height="100" width="500" style="background: #fff; margin-top: 30px"></svg>
+        <script type="text/javascript" src="map.js"></script>
+        <!-- RASTER -->
+        <div id="container" style="width: 650px; height: 400px; text-align: center; margin: auto"></div>
+        <div id="raster-legend" style="margin: auto"></div>
+        <script type="text/javascript" src="raster.js"></script>
+    </body>
+
 </html>

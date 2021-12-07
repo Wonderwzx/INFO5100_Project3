@@ -24,17 +24,6 @@ const yAxisArea = svg.append("g").attr("transform","translate("+(margin.left-10)
 const xAxisArea = svg.append("g").attr("transform","translate("+margin.left+","+(chartHeight+2+margin.top)+")");
 const label = svg.append("text").attr("x", margin.left+10).attr("y", margin.top+10);
 
-// const svgLegend = d3.select("raster-legend")
-//                  .append("svg")
-//                  .attr("width",width)
-//                  .attr("height", 70)
-// svgLegend.append("rect")
-//         .attr("x", 10)
-//         .attr("y", 10)
-//         .attr("width", 20)
-//         .attr("height", 15)
-//         .style("fill", d3.interpolateYlGnBu())
-
 
 const interactiveArea = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
 interactiveArea.append("rect")
