@@ -2,7 +2,7 @@
 const container = d3.select("#container").style("position","relative");
 const width = Number(container.style("width").replace("px",""));
 const height = Number(container.style("height").replace("px",""));
-const margin = { top: 10, right: 10, bottom: 70, left:60};
+const margin = { top: 15, right: 10, bottom: 70, left:60};
 const chartWidth = width - margin.left - margin.right;
 const chartHeight = height - margin.top - margin.bottom;
     
@@ -22,7 +22,7 @@ const svg = container.append("svg")
 
 const yAxisArea = svg.append("g").attr("transform","translate("+(margin.left-10)+","+margin.top+")");
 const xAxisArea = svg.append("g").attr("transform","translate("+margin.left+","+(chartHeight+2+margin.top)+")");
-const label = svg.append("text").attr("x", margin.left+10).attr("y", margin.top+10);
+const label = svg.append("text").attr("x", margin.left+10).attr("y", margin.top);
 
 
 const interactiveArea = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
