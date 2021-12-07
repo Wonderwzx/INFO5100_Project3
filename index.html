@@ -20,10 +20,12 @@
     </head>
 
     <body>
-        <!-- MAP -->
-        <svg id="choropleth" width="1200" height="600" style="background: #445; margin-top: 30px"></svg>
-        <svg id="mapLegend" height="100" width="500" style="background: #fff; margin-top: 30px"></svg>
-        <script type="text/javascript" src="map.js"></script>
+        <div id="map-container">
+            <select id="mapButton"></select>
+            <svg id="choropleth" width="1200" height="600" style="background: #445; margin-top: 30px"></svg>
+            <svg id="mapLegend" height="100" width="500" style="background: #fff; margin-top: 30px"></svg>
+            <script type="text/javascript" src="map.js"></script>
+        </div>
         <!-- RASTER -->
         <div>
             <select class="drop-down" id="raster-dropdown"></select>
