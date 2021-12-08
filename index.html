@@ -11,6 +11,8 @@
             stroke: grey;
             stroke-width: 1px;
         }
+
+        h1 {text-align: center;}
     </style>
 
     <head>
@@ -20,18 +22,19 @@
     </head>
 
     <body>
-        <div id="map-container">
-            <select id="mapButton"></select>
-            <svg id="choropleth" width="1200" height="600" style="background: #445; margin-top: 30px"></svg>
-            <svg id="mapLegend" height="100" width="500" style="background: #fff; margin-top: 30px"></svg>
+        <div id="map-container" >
+            <h1> US Map of College Number, Tuition, and Career Pay</h1>
+            <select class="drop-down" id="map-dropdown" style="margin-left: 40%;"></select>
+            <br>
+            <svg id="choropleth" width="1200" height="800" style="background: #fff; margin-top: 1%; margin-left: 5%"></svg>
+            <svg id="mapLegend" height="100" width="500" style="background: #fff; margin-top: 1%; margin-left: 25%"></svg>
             <script type="text/javascript" src="map.js"></script>
         </div>
-        <!-- RASTER -->
-        <div>
+        <div id="raster-container">
             <select class="drop-down" id="raster-dropdown"></select>
+            <div id="container" style="width: 650px; height: 400px; text-align: center; margin: auto"></div>
+            <script type="text/javascript" src="raster.js"></script>
         </div>
-        <div id="container" style="width: 650px; height: 400px; text-align: center; margin: auto"></div>
-        <script type="text/javascript" src="raster.js"></script>
     </body>
 
 </html>

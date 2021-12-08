@@ -1,7 +1,8 @@
 const svg1 = d3.select("#choropleth").style("position", "relative");
+const mapLegend = d3.select("#mapLegend").style("position", "relative");
 const width1 = svg1.attr('width');
 const height1 = svg1.attr('height');
-const margin1 = { top: 10, right: 10, bottom: 70, left: 60 };
+const margin1 = { top: 10, right: 60, bottom: 70, left: 60 };
 const mapWidth = width1 - margin1.left - margin1.right;
 const mapHeight = height1 - margin1.top - margin1.bottom;
 
@@ -35,13 +36,18 @@ const drawMap = async () => {
       return (d['state'] != "NA");
    })
 
+   dataSalary = dataSalary.filter((d) => {
+      d["state_name"] = d["state_name"].replace(/-/g, " ");
+      return (d['early_career_pay'] != "NA" && d['mid_career_pay'] != "NA");
+   })
+
    let stateList = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Minor Outlying Islands', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'U.S. Virgin Islands', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
    let countCollege = {};
-   let sumInTuition ={};
-   let avgInTuition ={};
-   let sumOutTuition ={};
-   let avgOutTuition ={};
+   let sumInTuition = {};
+   let avgInTuition = {};
+   let sumOutTuition = {};
+   let avgOutTuition = {};
    let sumEarlySalary = {};
    let avgEarlySalary = {};
    let sumMidSalary = {};
@@ -109,29 +115,37 @@ const drawMap = async () => {
    console.log(avgMidSalary)
 
    // Summart of State Information
-   let stateInfo = [];
-   for (var i=0; i < 52; i++) {
-      stateInfo.push ({
-         name: stateList[i],
-         number_of_colleges: countCollege[stateList[i]],
-         avg_in_state_tuition: avgInTuition[stateList[i]],
-         avg_out_of_state_tuition:avgOutTuition[stateList[i]],
-         avg_early_career_pay: avgEarlySalary[stateList[i]],
-         avg_middle_career_pay: avgMidSalary[stateList[i]],
-      });
-   }
-   console.log("---- stateInfo ----")
-   console.log(stateInfo)
+   // let stateInfo = [];
+   // for (var i=0; i < 52; i++) {
+   //    stateInfo.push ({
+   //       "Name": stateList[i],
+   //       "Number of Colleges": countCollege[stateList[i]],
+   //       "Avg In-state Tuition": avgInTuition[stateList[i]],
+   //       "Avg Out-of-state Tuition":avgOutTuition[stateList[i]],
+   //       "Avg Early Career Pay": avgEarlySalary[stateList[i]],
+   //       "Avg Middle Career Pay": avgMidSalary[stateList[i]],
+   //    });
+   // }
+   // console.log("---- stateInfo ----")
+   // console.log(stateInfo)
 
-   let infoLink = {
-      number_of_colleges: countCollege,
-      avg_in_state_tuition: avgInTuition,
-      avg_out_of_state_tuition: avgOutTuition,
-      avg_early_career_pay: avgEarlySalary,
-      avg_middle_career_pay: avgMidSalary
+   let lowercase2Data = {
+      "number_of_colleges": countCollege,
+      "avg_in_state_tuition": avgInTuition,
+      "avg_out_of_state_tuition": avgOutTuition,
+      "avg_early_career_pay": avgEarlySalary,
+      "avg_middle_career_pay": avgMidSalary
    }
-   console.log("----- infoLink ------")
-   console.log(infoLink)
+   console.log("----- lowercase2Data ------")
+   console.log(lowercase2Data)
+
+   let lowercase2Uppercase = {
+      "number_of_colleges": "Number of Colleges",
+      "avg_in_state_tuition": "Avg In-state Tuition",
+      "avg_out_of_state_tuition": "Avg Out-of-state Tuition",
+      "avg_early_career_pay": "Avg Early Career Pay",
+      "avg_middle_career_pay": "Avg Middle Career Pay"
+   };
 
    //------------------------------- DRAW MAP ------------------------------------
    var states = topojson.feature(dataUS, dataUS.objects.states);
@@ -146,7 +160,7 @@ const drawMap = async () => {
 
    var colorScale = d3.scaleQuantile()
       .domain(Object.values(countCollege))
-      .range(['#ffffd4', '#fed98e', '#fe9929', '#d95f0e', '#993404']);
+      .range(["#f4f9e8", "#d4eed3", "#90d4be", "#3ea9c1", "#225882"]);
    console.log("---- countCollege ---- ")
    console.log(countCollege)
 
@@ -165,56 +179,23 @@ const drawMap = async () => {
       .attr("class", "outline")
       .attr("d", path);
 
-   drawLegend(d3.select("#mapLegend"), colorScale);
+   drawLegend(mapLegend, colorScale);
 
    // ------------------------------- DROPDOWN MENU ------------------------------
-   // var allGroup = ["Average in-state tuition", "Average out-of state tuition", "Average early career salary", "Average mid career salary"]
-      var allGroup = ["avg_in_state_tuition", "avg_out_of_state_tuition", "avg_early_career_pay", "avg_middle_career_pay"]
-   // add the options to the button
-   d3.select("#mapButton")
-      .selectAll('myOptions')
-      .data(allGroup)
-      .enter()
-      .append('option')
-      .text(function (d) { return d; }) // text showed in the menu
-      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+   let mapDropdown = d3.select("#map-dropdown");
+   let lowercase = ["number_of_colleges", "avg_in_state_tuition", "avg_out_of_state_tuition", "avg_early_career_pay", "avg_middle_career_pay"]
+   let uppercase = ["Number of Colleges", "Avg In-state Tuition", "Avg Out-of-state Tuition", "Avg Early Career Pay", "Avg Middle Career Pay"];
 
-   // --------------------------------- UPDATE MAP --------------------------------
-   function update(selectedGroup) {
+   uppercase.forEach((d, i) => {
+      mapDropdown.append("option")
+         .attr("value", () => { return lowercase[i] })
+         .text("Color by: " + d)
+   });
 
-      // Give these new data to update map
-      colorScale = d3.scaleQuantile()
-      .domain(Object.values(infoLink[selectedGroup]))
-      .range(['#ffffd4', '#fed98e', '#fe9929', '#d95f0e', '#993404']);
-      console.log("---- infoLink[selectedGroup] ---- ")
-      console.log(infoLink[selectedGroup])
-
-      map.selectAll("path.state").data(states.features)
-      .join("path")
-      .attr("class", "state")
-      .attr('id', (d) => d.properties.name)
-      .attr("d", path)
-      .attr('fill', (d) => {
-         return colorScale(infoLink[selectedGroup][d.properties.name]);
-      })
-      .on('mouseover', mouseEntersPlot)
-      .on('mouseout', mouseLeavesPlot);
-    }
-
-    // When the button is changed, run the updateMap function
-    d3.select("#mapButton").on("change", function() {
-        // recover the option that has been chosen
-        var selectedOption = d3.select(this).property("value")
-        console.log("---- selectedOption ---- ")
-        console.log(selectedOption)
-        // run the updateChart function with this selected option
-        update(selectedOption)
-    })
- 
 
    //--------------------------------- MAP HOVER----------------------------------
-   let tooltipWidth = 140;
-   let tooltipHeight = 40;
+   let tooltipWidth = 200;
+   let tooltipHeight = 125;
 
    let momesh = map
       .append('path')
@@ -235,21 +216,30 @@ const drawMap = async () => {
       .attr('width', tooltipWidth)
       .attr('height', tooltipHeight);
 
-   let txt = tooltip
+
+   let stateLabel = tooltip
       .append('text')
       .attr('fill', 'white')
       .attr('text-anchor', 'middle')
+      .style("font-family", "sans-serif")
+      .style("font-size", "12px")
       .attr('alignment-baseline', 'hanging')
       .attr('x', 0)
       .attr('y', 2);
 
-   let txt2 = tooltip
-      .append('text')
-      .attr('fill', 'white')
-      .attr('text-anchor', 'middle')
-      .attr('alignment-baseline', 'hanging')
-      .attr('x', 0)
-      .attr('y', 22);
+
+   lowercase.forEach((d, i) => {
+      tooltip.append("text")
+        .attr("id", d)
+        .attr("x", 0)
+        .attr("y", 25 + 20 * i)
+        .attr("text-anchor", "middle")
+        .style("font-family", "sans-serif")
+        .style("font-size", "12px")
+        .attr('alignment-baseline', 'hanging')
+        .attr('fill', 'white')
+        .text("");
+    })
 
    d3.selectAll('.state').on('mouseenter', mouseEntersPlot);
    d3.selectAll('.state').on('mouseout', mouseLeavesPlot);
@@ -258,11 +248,16 @@ const drawMap = async () => {
       tooltip.style('visibility', 'visible');
 
       let state = d3.select(this);
-
       let stateName = state.datum().properties.name;
 
-      txt.text(stateName);
-      txt2.text(countCollege[stateName] + " schools");
+      stateLabel.text(stateName);
+
+      // stateInfo.text("Number of Colleges: " + countCollege[stateName])
+
+
+      lowercase.forEach(function (d) {
+            d3.selectAll("text#" + d).text(lowercase2Uppercase[d] + ": " + lowercase2Data[d][stateName]);
+         });
 
       let bounds = path.bounds(state.datum());
 
@@ -344,6 +339,51 @@ const drawMap = async () => {
          .attr('y1', barHeight + 4);
    }
 
+   // --------------------------------- UPDATE MAP --------------------------------
+   function update(selectedGroup) {
+
+      // Give these new data to update map
+      colorScale = d3.scaleQuantile()
+         .domain(Object.values(lowercase2Data[selectedGroup]))
+         .range(["#f4f9e8", "#d4eed3", "#90d4be", "#3ea9c1", "#225882"]);
+      console.log("---- lowercase2Data[selectedGroup] ---- ")
+      console.log(lowercase2Data[selectedGroup])
+
+      // Update Legend
+      mapLegend.html("")
+      drawLegend(mapLegend, colorScale);
+
+      map.selectAll("path.state").data(states.features)
+         .join("path")
+         .attr("class", "state")
+         .attr('id', (d) => d.properties.name)
+         .attr("d", path)
+         .attr('fill', (d) => {
+            return colorScale(lowercase2Data[selectedGroup][d.properties.name]);
+         })
+         .on('mouseover', mouseEntersPlot)
+         .on('mouseout', mouseLeavesPlot);
+   
+   }
+
+
+   // When the button is changed, run the updateMap function
+   mapDropdown.on("change", function () {
+      var selectedOption = d3.select(this).property("value")
+      console.log("---- selectedOption ---- ")
+      console.log(d3.select(this))
+      update(selectedOption)
+   })
+
+   // ####################################### Function showChart() #######################################
+
+   function showSpiderMap() {
+     // Use this command to erase:
+     // annotations.html("")
+   
+     let clicked = d3.select(this).datum();
+
+   }
 
 
 
