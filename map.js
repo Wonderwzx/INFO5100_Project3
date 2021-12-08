@@ -29,7 +29,7 @@ const drawMap = async () => {
 
    //------------------------ DATA PROCESSING ------------------------------------
    dataSchool = dataSchool.filter((d) => {
-      return (d['name'] != 'NA');
+      return (d['name'] != 'NA' && d['category'] == "Women");
    });
 
    dataTuition = dataTuition.filter((d) => {
