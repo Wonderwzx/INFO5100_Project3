@@ -1,10 +1,14 @@
 // https://jeffrz.github.io/info3300-fa2021/notes/21.10.27.notes.htm
 const container = d3.select("#container").style("position","relative");
+const svgLegend = d3.select("#rasterLegend");
+const widthLegend = svgLegend.attr('width');
+const heightLegend = svgLegend.attr('height');
 const width = Number(container.style("width").replace("px",""));
 const height = Number(container.style("height").replace("px",""));
-const margin = { top: 10, right: 10, bottom: 70, left:60};
+const margin = { top: 15, right: 10, bottom: 70, left:65};
 const chartWidth = width - margin.left - margin.right;
 const chartHeight = height - margin.top - margin.bottom;
+
     
 const svgA = container.append("svg")
                         .attr("width",chartWidth)
@@ -22,7 +26,15 @@ const svg = container.append("svg")
 
 const yAxisArea = svg.append("g").attr("transform","translate("+(margin.left-10)+","+margin.top+")");
 const xAxisArea = svg.append("g").attr("transform","translate("+margin.left+","+(chartHeight+2+margin.top)+")");
-const label = svg.append("text").attr("x", margin.left+10).attr("y", margin.top+10);
+const label = svg.append("text").attr("x", margin.left+10).attr("y", margin.top);
+
+svg.append("text") // y-axis label
+    // .attr("transform", "rotate(-90)")
+    .attr('x',0)
+    .attr('y', margin.top)
+    .text("Income/$")
+    .style('font', '12px Verdana')
+    .style("font-weight","bold");
 
 
 const interactiveArea = svg.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
@@ -43,10 +55,34 @@ const drawPlot = async () => {
     console.log(categories)
     const xScale = d3.scalePoint().domain(categories).range([10, chartWidth-10]);
     let yScale = d3.scaleLinear().domain(d3.extent(data, d => d.Median)).range([chartHeight-10, 10]);
-    const cScale = d3.scaleLinear().domain(d3.extent(data, d => d.Unemployment_rate)).range([0, 1]);
+    const cScale = d3.scaleLinear().domain(d3.extent(data, d => (1-d.Unemployment_rate))).range([0, 1]);
     const colorScale = d3.scaleSequential( d => d3.interpolateYlGnBu(cScale(d)) );
 
-    
+    var colorScaleLegend = d3.scaleSequential(d3.interpolateYlGnBu)
+                        .domain([0, widthLegend])
+         
+    svgLegend.selectAll("rect")
+             .data(d3.range(widthLegend), function(d) { return d; })
+             .enter().append("rect")
+             .attr("x", function(d, i) { return i; })
+             .attr("y", 10)
+             .attr("height", 30)
+             .attr("width", 1)
+             .style("fill", function(d, i ) { return colorScaleLegend(d); })
+
+    const legendscale = d3.scaleLinear().domain(d3.extent(data, d => (1-d.Unemployment_rate))).range([0, outerWidth]);
+    let legendAxis = d3.axisBottom(legendscale);
+    svgLegend.append("g")
+             .attr("class", "legend axis")
+             .call(legendAxis)
+             .attr("transform","translate(0,40)");
+    svgLegend.append("text") 
+            .attr('x',0)
+            .attr('y', 10)
+            .text("Employment Rate")
+            // .style("alignment-baseline","hanging")
+            .style('font', '12px Verdana')
+            .style("font-weight","bold");
 
     let yAxis = d3.axisLeft(yScale); 
     yAxisArea.append("g").attr("class", "y axis").call(yAxis);
@@ -67,9 +103,9 @@ const drawPlot = async () => {
         svgA.append("circle")
            .attr("cx", xScale(d.Major_category))
            .attr("cy", yScale(d.Median))
-           .style("fill", colorScale(d.Unemployment_rate))
+           .style("fill", colorScale(1 - d.Unemployment_rate))
            .attr("r",8)
-           .style("opacity",0.6)
+           .style("opacity",0.7)
     });
 
       const delaunay = d3.Delaunay.from(data, d => xScale(d.Major_category), d => yScale(d.Median));
