@@ -33,10 +33,26 @@
 
         <div id="raster-container">
             <div>
-                <select class="drop-down" id="raster-dropdown" style="margin-left: 60%;"></select>
+                <select class="drop-down" id="raster-dropdown" style="margin-left: 250px;"></select>
+                <select id="selectStates" style="margin-left: 500px; width:120px">
+                    <option value = "states" selected>Select States</option>
+                </select>
+                <select id="selectRankingSystem" style="width:120px">
+                    <option value="Ranking system" selected>Select Ranking</option>
+                    <option value="CWUR">CWUR</option>
+                    <option value="ARWU">ARWU</option>
+                    <option value="THE">THE</option>
+                </select>
+                <select id="selectUniversity" style="width:180px">
+                    <option value="Universities" selected>Select Universities</option>
+                </select>
+                <select id="selectYear" style="width:100px">
+                    <option value="year" selected>Select year</option>
+                </select>
+                <button id="update" style="width:60px;height:18px"></button>
             </div>
-            <div id="container" style="width: 650px; height: 400px; text-align: center; margin: auto" ></div>
-            <div style="margin-left: 33%;">
+            <div id="container" style="width: 1200px; height: 400px; text-align: center;"></div>
+            <div style="margin-left: 100px;">
                 <svg id="rasterLegend" width="500"  height="70"; style= "margin: auto"  align="center"></svg> 
             </div>
             <script type="text/javascript" src="raster.js"></script>
