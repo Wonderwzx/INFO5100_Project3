@@ -1,0 +1,40 @@
+.outline {
+    stroke: black;
+    stroke-width: 1px;
+    fill: none;
+}
+
+.graticule {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1px;
+}
+
+h1 {
+    padding-top: 40px;
+    text-align: center;
+    }
+
+h3.map {
+    text-align: center;
+    }
+
+p.intro {
+    /* background-color: #E8F7F4; */
+    font-size: 18px;
+    text-align: left;
+    padding-top: 30px;
+    padding-right:200px;
+    padding-bottom:30px;
+    padding-left: 200px;
+  }
+
+p.map {
+    font-size: 18px;
+    text-align: center;
+    padding-bottom:15px;
+}
+
+.highlight {
+    background-color: #D1F0E9
+}

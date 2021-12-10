@@ -1,19 +1,4 @@
 <html>
-    <style>
-        .outline {
-            stroke: black;
-            stroke-width: 1px;
-            fill: none;
-        }
-
-        .graticule {
-            fill: none;
-            stroke: grey;
-            stroke-width: 1px;
-        }
-
-        h1 {text-align: center;}
-    </style>
 
     <head>
         <link rel="stylesheet" href="css/style.css" />
@@ -23,24 +8,40 @@
 
     <body>
         <h1>How to Choose an Ideal College and Major?</h1>
-        <p> The first chart is an interactive US map of the number of colleges, tuition, and career pay. This gives you an idea
+        <p class="intro"> The visualization aims to help viewers to make selections for their ideal future college and major in the US. 
+            We examined four datasets of college-related topics, and combined part of the subsets to create the three graphs that together 
+            can provide viewers with comprehensive information and practical suggestions. The three data visualizations include a US 
+            states map, a spider map, and a raster graph, which display the three most important factors that viewers need to take into 
+            consideration: region, school ranking, and major ranking. 
+
+            <!-- The first chart is an interactive US map of the number of colleges, tuition, and career pay. This gives you an idea
             of where to attend college if you would like to get paid off after graduation.
-            Choose from the dropdown bar to see the data of different states.
+            Choose from the dropdown bar to see the data of different states. -->
         </p>
+        <h3 class="map">
+            US Map of the College Numbers, Tuition, and Career Pay
+        </h3>
+        <!-- <p class="map">
+            <span class="highlight">Select</span> and <span class="highlight">hover over</span> to see details.
+        </p> -->
         <div id="map-container" >   
             <select class="drop-down" id="map-dropdown" style="margin-left: 40%;"></select>
             <br>
             <svg id="choropleth" width="1200" height="800" style="background: #fff; margin-top: 1%; margin-left: 5%"></svg>
-            <svg id="mapLegend" height="100" width="500" style="background: #fff; margin-top: 1%; margin-left: 25%"></svg>
+            <svg id="mapLegend" height="100" width="500" style="background: #fff; margin-top: 1%; margin-left: 30%"></svg>
             <script type="text/javascript" src="map.js"></script>
         </div>
 
-        <p>The left chart shows the major categories and their incomes. Each dot is a mojor in that category. Hover on it to see
+        <div style="display: flex; justify-content: space-between;">
+            <p style="font-size: 1.17em; font-weight: bolder; padding-bottom: 20px; padding-bottom: 20px; padding-left: 18%;" >Income and Majors</p>
+            <p style="font-size: 1.17em; font-weight: bolder; padding-bottom: 20px;padding-right: 27%;" > Ranking Scores</p>
+        </div>
+        <!-- <p>The left chart shows the major categories and their incomes. Each dot is a mojor in that category. Hover on it to see
             which major it is. Select from the dropdown to see an animation of each major showing the changes in median income, 
             25th percentile of earnings and 75th percentile of earnings.<br>
             The ranking is also an important factor to consider when choosing college. The right chart shows different scores 
             according to different ranking systems.
-        </p>
+        </p> -->
         <div id="raster-container">
             <div>
                 <select class="drop-down" id="raster-dropdown" style="margin-left: 250px;"></select>
