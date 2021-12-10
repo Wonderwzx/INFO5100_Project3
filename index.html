@@ -22,8 +22,12 @@
     </head>
 
     <body>
-        <div id="map-container" >
-            <h1> US Map of College Number, Tuition, and Career Pay</h1>
+        <h1>How to Choose an Ideal College and Major?</h1>
+        <p> The first chart is an interactive US map of the number of colleges, tuition, and career pay. This gives you an idea
+            of where to attend college if you would like to get paid off after graduation.
+            Choose from the dropdown bar to see the data of different states.
+        </p>
+        <div id="map-container" >   
             <select class="drop-down" id="map-dropdown" style="margin-left: 40%;"></select>
             <br>
             <svg id="choropleth" width="1200" height="800" style="background: #fff; margin-top: 1%; margin-left: 5%"></svg>
@@ -31,6 +35,12 @@
             <script type="text/javascript" src="map.js"></script>
         </div>
 
+        <p>The left chart shows the major categories and their incomes. Each dot is a mojor in that category. Hover on it to see
+            which major it is. Select from the dropdown to see an animation of each major showing the changes in median income, 
+            25th percentile of earnings and 75th percentile of earnings.<br>
+            The ranking is also an important factor to consider when choosing college. The right chart shows different scores 
+            according to different ranking systems.
+        </p>
         <div id="raster-container">
             <div>
                 <select class="drop-down" id="raster-dropdown" style="margin-left: 250px;"></select>
