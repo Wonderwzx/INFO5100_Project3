@@ -1,3 +1,4 @@
+//Spider-web graph inspiration: https://www.kaggle.com/gpreda/world-university-rankings-advanced-analysis
 const radar = container.append("svg")
                        .attr("width","600px")
                        .attr("height","400px")

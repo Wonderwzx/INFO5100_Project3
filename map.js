@@ -1,3 +1,5 @@
+// map inspiration: https://github.com/jeffrz/info3300-fa2021/blob/master/notes/21.10.13.notes.htm
+// dropdown menu inspiration: https://www.d3-graph-gallery.com/graph/line_select.html
 const svg1 = d3.select("#choropleth").style("position", "relative");
 const mapLegend = d3.select("#mapLegend").style("position", "relative");
 const width1 = svg1.attr('width');
