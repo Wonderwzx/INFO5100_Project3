@@ -4,7 +4,7 @@ const svg1 = d3.select("#choropleth").style("position", "relative");
 const mapLegend = d3.select("#mapLegend").style("position", "relative");
 const width1 = svg1.attr('width');
 const height1 = svg1.attr('height');
-const margin1 = { top: 10, right: 70, bottom: 70, left: 60 };
+const margin1 = { top: 10, right: 70, bottom: 10, left: 60 };
 const mapWidth = width1 - margin1.left - margin1.right;
 const mapHeight = height1 - margin1.top - margin1.bottom;
 
